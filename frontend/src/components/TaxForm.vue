@@ -1,0 +1,151 @@
+<script setup>
+import { ref } from "vue";
+// Reactive variables for form inputs
+const income = ref(null);
+const expenses = ref(null);
+const propertiesNum = ref(null);
+const errorMsg = ref({
+  income: "",
+  expenses: "",
+  propertiesNum: "",
+});
+
+// Form validation function
+const validateForm = () => {
+  if (income.value < 0) {
+    errorMsg.value.income = "Income cannot be negative!";
+    return false;
+  }
+  errorMsg.value.income = "";
+
+  if (expenses.value < 0) {
+    errorMsg.value.expenses = "Expenses cannot be negative!";
+    return false;
+  }
+  errorMsg.value.expenses = "";
+
+  if (propertiesNum.value < 0) {
+    errorMsg.value.propertiesNum = "Properties number cannot be negative!";
+    return false;
+  }
+  errorMsg.value.propertiesNum = "";
+
+  return true;
+};
+
+// Handler for form submission
+const onSubmit = () => {
+  if (validateForm()) {
+    console.log("Submitted");
+  }
+};
+</script>
+
+<template>
+  <div class="form-container">
+    <h2>Tax information</h2>
+
+    <form @submit.prevent="onSubmit">
+      <div class="form-field">
+        <label for="income">Annual income (EUR):</label>
+        <input
+          type="number"
+          id="income"
+          v-model="income"
+          placeholder="Input income"
+          required
+        />
+        <p v-if="errorMsg.income" class="error-msg">{{ errorMsg.income }}</p>
+      </div>
+
+      <div class="form-field">
+        <label for="expenses">Annual expenses (EUR):</label>
+        <input
+          type="number"
+          id="expenses"
+          v-model="expenses"
+          placeholder="Input expenses"
+          required
+        />
+        <p v-if="errorMsg.expenses" class="error-msg">
+          {{ errorMsg.expenses }}
+        </p>
+      </div>
+
+      <div class="form-field">
+        <label for="propertiesNum">Number of properties owned:</label>
+        <input
+          type="number"
+          id="propertiesNum"
+          v-model="propertiesNum"
+          placeholder="Input # properties"
+          required
+        />
+        <p v-if="errorMsg.propertiesNum" class="error-msg">
+          {{ errorMsg.propertiesNum }}
+        </p>
+      </div>
+
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+</template>
+
+<style scoped>
+.form-container {
+  min-height: 400px;
+  max-width: 400px;
+  margin: auto;
+  padding: 10px;
+  text-align: center;
+  border: 1px solid var(--vt-c-indigo);
+  border-radius: 5px;
+}
+
+h2 {
+  margin-bottom: 30px;
+}
+
+.form-field {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+label {
+  display: block;
+  font-weight: bolder;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 4px;
+  border: 3px solid var(--vt-c-indigo);
+  border-radius: 2px;
+  background-color: var(--color-background);
+  color: var(--color-text);
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: var(--vt-c-indigo);
+  color: var(--text-color);
+  border: 1px solid var(--vt-c-indigo);
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+button:hover {
+  background-color: var(--vt-c-black-mute);
+  transition: 0.2s;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+.error-msg {
+  font-style: italic;
+}
+</style>
