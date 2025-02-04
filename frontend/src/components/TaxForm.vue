@@ -1,9 +1,13 @@
 <script setup>
 import { ref } from "vue";
+import axios from "axios";
+
 // Reactive variables for form inputs
-const income = ref(null);
-const expenses = ref(null);
-const propertiesNum = ref(null);
+const taxData = ref({
+  income: null,
+  expenses: null,
+  propertiesNum: null,
+});
 const errorMsg = ref({
   income: "",
   expenses: "",
@@ -12,19 +16,19 @@ const errorMsg = ref({
 
 // Form validation function
 const validateForm = () => {
-  if (income.value < 0) {
+  if (taxData.value.income < 0) {
     errorMsg.value.income = "Income cannot be negative!";
     return false;
   }
   errorMsg.value.income = "";
 
-  if (expenses.value < 0) {
+  if (taxData.value.expenses < 0) {
     errorMsg.value.expenses = "Expenses cannot be negative!";
     return false;
   }
   errorMsg.value.expenses = "";
 
-  if (propertiesNum.value < 0) {
+  if (taxData.value.propertiesNum < 0) {
     errorMsg.value.propertiesNum = "Properties number cannot be negative!";
     return false;
   }
@@ -33,11 +37,32 @@ const validateForm = () => {
   return true;
 };
 
+// Make the backend API call to get AI-generated advice
+const getAdvice = async () => {
+  try {
+    const response = await axios.post(
+      "http://127.0.0.1:8000/api/advice/generate",
+      taxData.value,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    console.log("Form submitted successfully!");
+    console.log("Response:", response.data);
+  } catch (e) {
+    console.error("Error submitting the form: ", e);
+  }
+};
+
 // Handler for form submission
 const onSubmit = () => {
   if (validateForm()) {
     console.log("Submitted");
   }
+
+  getAdvice();
 };
 </script>
 
@@ -51,7 +76,7 @@ const onSubmit = () => {
         <input
           type="number"
           id="income"
-          v-model="income"
+          v-model="taxData.income"
           placeholder="Input income"
           required
         />
@@ -63,7 +88,7 @@ const onSubmit = () => {
         <input
           type="number"
           id="expenses"
-          v-model="expenses"
+          v-model="taxData.expenses"
           placeholder="Input expenses"
           required
         />
@@ -77,7 +102,7 @@ const onSubmit = () => {
         <input
           type="number"
           id="propertiesNum"
-          v-model="propertiesNum"
+          v-model="taxData.propertiesNum"
           placeholder="Input # properties"
           required
         />
