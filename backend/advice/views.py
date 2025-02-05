@@ -2,11 +2,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 
-import environ
 from openai import OpenAI
 from backend.settings import env
-
-# Initialize environ
 
 client = OpenAI(
     api_key=env('OPENAI_API_KEY')
