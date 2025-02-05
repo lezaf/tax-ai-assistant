@@ -48,7 +48,7 @@ const errorMsg = defineModel("errorMsg");
     <label for="userPrompt">Prompt:</label>
     <textarea
       v-model="taxData.userPrompt"
-      placeholder="Talk to AI.."
+      placeholder="Talk to AI for a tax filing related matter..."
       rows="5"
       required
     />
@@ -89,4 +89,16 @@ textarea {
 .error-msg {
   font-style: italic;
 }
+
+/* Remove arrows in browsers. */
+/* input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -appearance: none;
+  -moz-appearance: textfield;
+} */
 </style>
