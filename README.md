@@ -62,26 +62,26 @@ api_key=env('OPENAI_API_KEY')
 
 @api_view(['POST'])
 def  generate_advice(request):
-	# ...
+    # ...
 
-	try:
-		chat_completion  =  client.chat.completions.create(
-			model='gpt-4o',
-			messages=[
-				{
-					"role": "developer",
-					"content": "You are a helpful tax filing assistant." +
-							   "You get tax related data and a user prompt"  +
-							   "and you provide advice."
-				},
-				{
-					"role": "user",
-					"content": user_prompt
-				}
-			],
-		)
+    try:
+        chat_completion  =  client.chat.completions.create(
+            model='gpt-4o',
+            messages=[
+                {
+                    "role": "developer",
+                    "content": "You are a helpful tax filing assistant." +
+                        "You get tax related data and a user prompt"  +
+                        "and you provide advice."
+                },
+                {
+                    "role": "user",
+                    "content": user_prompt
+                }
+            ],
+        )
 
-	# ...
+# ...
 ```
 
 In this part, the OpenAI client is created and the expected behavior is defined. On success, the **AI generated answer** is included in _Response_:
@@ -93,12 +93,12 @@ In this part, the OpenAI client is created and the expected behavior is defined.
 
 @api_view(['POST'])
 def  generate_advice(request):
-	# ...
+    # ...
 
-	return  Response({
-		'success': True,
-		'detail': 'Form was submitted successfully!',
-		'answer': chat_completion.choices[0].message.content,
-		'status': status.HTTP_200_OK
-	})
+    return  Response({
+        'success': True,
+        'detail': 'Form was submitted successfully!',
+        'answer': chat_completion.choices[0].message.content,
+        'status': status.HTTP_200_OK
+    })
 ```
