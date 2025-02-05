@@ -18,10 +18,17 @@ def generate_advice(request):
     Creates an AI-generated advice based on user input.
     '''
     data = request.data
+    user_data = data['userData']
+
+    print(data)
 
     # Construct user's prompt
-    user_data_str = ", ".join(f"{k}= {data[k]}" for k in data)
-    user_prompt = f"The user provided following data: {user_data_str}." + f"Make a comment on this."
+    user_data_str = ", ".join(f"{k}= {user_data[k]}" for k in user_data)
+    user_prompt = f"The user provided following data: {user_data_str}." \
+                  f" User's message is : {data['userPrompt']}"
+    
+    print(f"User provided data: {user_data_str}")
+    print(f"User prompt: {user_prompt}")
 
     # API call to OpenAI
     try:
@@ -31,8 +38,8 @@ def generate_advice(request):
                 {
                     "role": "developer",
                     "content": "You are a helpful tax filing assistant. You get tax related data and" +
-                            "a user request and you provide advice."
-                            # Be friendly and keep your answers not very extensive.
+                            "a user prompt and you provide advice." +
+                            "Keep your answers around 200 words."
                 },
                 {
                     "role": "user",
@@ -40,8 +47,6 @@ def generate_advice(request):
                 }
             ],
         )
-
-        print(chat_completion.choices[0].message.content)
     except Exception as e:
         return Response({
             'success': False,
@@ -52,5 +57,6 @@ def generate_advice(request):
     return Response({
         'success': True,
         'detail': 'Form was submitted successfully!',
+        'data': chat_completion.choices[0].message.content,
         'status': status.HTTP_200_OK
         })

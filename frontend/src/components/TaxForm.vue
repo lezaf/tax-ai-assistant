@@ -7,6 +7,7 @@ const taxData = ref({
   income: null,
   expenses: null,
   propertiesNum: null,
+  userPrompt: null,
 });
 const errorMsg = ref({
   income: "",
@@ -20,7 +21,7 @@ const validateForm = () => {
     errorMsg.value.income = "Income cannot be negative!";
     return false;
   }
-  errorMsg.value.income = "";
+  errorMsg.value.income = ""; // Reset msg if user inserted a value
 
   if (taxData.value.expenses < 0) {
     errorMsg.value.expenses = "Expenses cannot be negative!";
@@ -42,7 +43,14 @@ const getAdvice = async () => {
   try {
     const response = await axios.post(
       "http://127.0.0.1:8000/api/advice/generate",
-      taxData.value,
+      {
+        userData: {
+          income: taxData.value.income,
+          expenses: taxData.value.expenses,
+          propertiesNum: taxData.value.propertiesNum,
+        },
+        userPrompt: taxData.value.userPrompt,
+      },
       {
         headers: {
           "Content-Type": "application/json",
@@ -111,6 +119,16 @@ const onSubmit = () => {
         </p>
       </div>
 
+      <div class="form-field">
+        <label for="userPrompt">Prompt:</label>
+        <textarea
+          v-model="taxData.userPrompt"
+          placeholder="Talk to AI.."
+          rows="5"
+          required
+        />
+      </div>
+
       <button type="submit">Submit</button>
     </form>
   </div>
@@ -136,6 +154,14 @@ h2 {
   text-align: left;
 }
 
+.form-field input,
+textarea {
+  border: 3px solid var(--vt-c-indigo);
+  border-radius: 2px;
+  background-color: var(--color-background);
+  color: var(--color-text);
+}
+
 label {
   display: block;
   font-weight: bolder;
@@ -145,10 +171,12 @@ input {
   width: 100%;
   padding: 10px;
   margin-top: 4px;
-  border: 3px solid var(--vt-c-indigo);
-  border-radius: 2px;
-  background-color: var(--color-background);
-  color: var(--color-text);
+}
+
+textarea {
+  resize: none;
+  width: 100%;
+  margin-top: 4px;
 }
 
 button {
