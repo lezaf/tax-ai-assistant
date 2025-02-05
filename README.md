@@ -44,6 +44,6 @@ OPENAI_API_KEY=my_openai_key
 
 Below is the backend API endpoints documentation:
 
-| method |      endpoint       | description                                         |
-| :----: | :-----------------: | :-------------------------------------------------- |
+| method | endpoint            | description                                         |
+| :----: | :------------------ | :-------------------------------------------------- |
 |  POST  | api/advice/generate | Generates AI response based on user data and prompt |
