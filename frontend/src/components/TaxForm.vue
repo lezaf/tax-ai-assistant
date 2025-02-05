@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from "vue";
 import axios from "axios";
+import TaxFormFields from "./TaxFormFields.vue";
 
 // Reactive variables for form inputs
 const taxData = ref({
@@ -68,9 +69,9 @@ const getAdvice = async () => {
 const onSubmit = () => {
   if (validateForm()) {
     console.log("Submitted");
-  }
 
-  getAdvice();
+    getAdvice();
+  }
 };
 </script>
 
@@ -79,56 +80,7 @@ const onSubmit = () => {
     <h2>Tax information</h2>
 
     <form @submit.prevent="onSubmit">
-      <div class="form-field">
-        <label for="income">Annual income (EUR):</label>
-        <input
-          type="number"
-          id="income"
-          v-model="taxData.income"
-          placeholder="Input income"
-          required
-        />
-        <p v-if="errorMsg.income" class="error-msg">{{ errorMsg.income }}</p>
-      </div>
-
-      <div class="form-field">
-        <label for="expenses">Annual expenses (EUR):</label>
-        <input
-          type="number"
-          id="expenses"
-          v-model="taxData.expenses"
-          placeholder="Input expenses"
-          required
-        />
-        <p v-if="errorMsg.expenses" class="error-msg">
-          {{ errorMsg.expenses }}
-        </p>
-      </div>
-
-      <div class="form-field">
-        <label for="propertiesNum">Number of properties owned:</label>
-        <input
-          type="number"
-          id="propertiesNum"
-          v-model="taxData.propertiesNum"
-          placeholder="Input # properties"
-          required
-        />
-        <p v-if="errorMsg.propertiesNum" class="error-msg">
-          {{ errorMsg.propertiesNum }}
-        </p>
-      </div>
-
-      <div class="form-field">
-        <label for="userPrompt">Prompt:</label>
-        <textarea
-          v-model="taxData.userPrompt"
-          placeholder="Talk to AI.."
-          rows="5"
-          required
-        />
-      </div>
-
+      <TaxFormFields v-model:taxData="taxData" v-model:errorMsg="errorMsg" />
       <button type="submit">Submit</button>
     </form>
   </div>
@@ -149,36 +101,6 @@ h2 {
   margin-bottom: 30px;
 }
 
-.form-field {
-  margin-bottom: 20px;
-  text-align: left;
-}
-
-.form-field input,
-textarea {
-  border: 3px solid var(--vt-c-indigo);
-  border-radius: 2px;
-  background-color: var(--color-background);
-  color: var(--color-text);
-}
-
-label {
-  display: block;
-  font-weight: bolder;
-}
-
-input {
-  width: 100%;
-  padding: 10px;
-  margin-top: 4px;
-}
-
-textarea {
-  resize: none;
-  width: 100%;
-  margin-top: 4px;
-}
-
 button {
   width: 100%;
   padding: 10px;
@@ -196,9 +118,5 @@ button:hover {
 
 button:active {
   transform: scale(0.98);
-}
-
-.error-msg {
-  font-style: italic;
 }
 </style>
