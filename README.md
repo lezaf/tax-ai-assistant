@@ -44,6 +44,61 @@ OPENAI_API_KEY=my_openai_key
 
 Below is the backend API endpoints documentation:
 
-| method | endpoint            | description                                         |
-| :----: | :------------------ | :-------------------------------------------------- |
+| method |      endpoint       | description                                         |
+| :----: | :-----------------: | :-------------------------------------------------- |
 |  POST  | api/advice/generate | Generates AI response based on user data and prompt |
+
+## AI integration using OpenAI
+
+To integrate AI in backend to generate content based on prompts, the [OpenAI Python API library](https://github.com/openai/openai-python) is used. Backend app [advice](./backend/advice) is responsible for handling AI-related API calls. To generate tax filing advice, **generate_advice** view is called to communicate with OpenAI API:
+
+```
+# in backend/advice/views.py
+
+# ...
+
+client  =  OpenAI(
+api_key=env('OPENAI_API_KEY')
+
+@api_view(['POST'])
+def  generate_advice(request):
+	# ...
+
+	try:
+		chat_completion  =  client.chat.completions.create(
+			model='gpt-4o',
+			messages=[
+				{
+					"role": "developer",
+					"content": "You are a helpful tax filing assistant." +
+							   "You get tax related data and a user prompt"  +
+							   "and you provide advice."
+				},
+				{
+					"role": "user",
+					"content": user_prompt
+				}
+			],
+		)
+
+	# ...
+```
+
+In this part, the OpenAI client is created and the expected behavior is defined. On success, the **AI generated answer** is included in _Response_:
+
+```
+# in backend/advice/views.py
+
+# ...
+
+@api_view(['POST'])
+def  generate_advice(request):
+	# ...
+
+	return  Response({
+		'success': True,
+		'detail': 'Form was submitted successfully!',
+		'answer': chat_completion.choices[0].message.content,
+		'status': status.HTTP_200_OK
+	})
+```
