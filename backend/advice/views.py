@@ -57,6 +57,6 @@ def generate_advice(request):
     return Response({
         'success': True,
         'detail': 'Form was submitted successfully!',
-        'data': chat_completion.choices[0].message.content,
+        'answer': chat_completion.choices[0].message.content,
         'status': status.HTTP_200_OK
         })
