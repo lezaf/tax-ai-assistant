@@ -32,7 +32,7 @@ pip install -r requirements.txt
 
 ### Local .env file
 
-Create a local **.env** to store environment variables. The file is excluded from tracking (see [.gitignore](./backend/.gitignore)). Variables declared in .env include:
+Create a local **.env** to store environment variables. The file is excluded from tracking (see [.gitignore](./backend/.gitignore)). Use [.env.template](./backend/.env.template) as a template. Variables declared in .env include:
 
 ```
 DEBUG=on
@@ -102,3 +102,16 @@ def  generate_advice(request):
         'status': status.HTTP_200_OK
     })
 ```
+
+## Containerization with Docker
+
+To build and operate app in Docker container:
+
+- Prepare .env in backend (see [Local .env file](#local-.env-file))
+- **Build** and **start** the containers using [docker-compose.yml](./docker-compose.yml):
+
+```
+docker-compose up
+```
+
+Follow frontend's container url (by default http://localhost:5173) to operate application.
