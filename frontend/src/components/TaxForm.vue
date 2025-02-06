@@ -46,7 +46,7 @@ const validateForm = () => {
 const getAdvice = async () => {
   try {
     const response = await axios.post(
-      "api/advice/generate",
+      "http://localhost:8000/api/advice/generate",
       {
         userData: {
           income: taxData.value.income,

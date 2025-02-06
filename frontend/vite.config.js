@@ -12,9 +12,11 @@ export default defineConfig({
       "@": fileURLToPath(new URL("./src", import.meta.url)),
     },
   },
-  server: {
-    proxy: {
-      "/api": "http://localhost:8000",
-    },
-  },
+  // Commented it out due to incompatibility with Docker
+  // TODO: fix this
+  // server: {
+  //   proxy: {
+  //     "/api": "http://localhost:8000",
+  //   },
+  // },
 });
