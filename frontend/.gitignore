@@ -30,8 +30,6 @@ coverage
 *.tsbuildinfo
 
 # Default vue project files
-src/components/icons
 HelloWorld.vue
 TheWelcome.vue
 WelcomeItem.vue
-src/views/AboutView.vue
