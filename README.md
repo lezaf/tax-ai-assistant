@@ -107,7 +107,7 @@ def  generate_advice(request):
 
 To build and operate app in Docker container:
 
-- Prepare .env in backend (see [Local .env file](#local-.env-file))
+- Prepare .env in backend (see [Local .env file](#local-env-file))
 - **Build** and **start** the containers using [docker-compose.yml](./docker-compose.yml):
 
 ```
