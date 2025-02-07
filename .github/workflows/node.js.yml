@@ -30,4 +30,6 @@ jobs:
 
     - name: Run tests
       working-directory: './frontend'
-      run: npx vitest --config vitest.config.js
+      run: |
+        npm ci
+        npx vitest --config vitest.config.js
