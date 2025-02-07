@@ -28,8 +28,3 @@ coverage
 *.sw?
 
 *.tsbuildinfo
-
-# Default vue project files
-HelloWorld.vue
-TheWelcome.vue
-WelcomeItem.vue

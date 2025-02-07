@@ -2,8 +2,3 @@ node_modules
 dist
 .git
 .vscode
-
-# Default vue project files
-src/components/HelloWorld.vue
-src/components/TheWelcome.vue
-src/components/WelcomeItem.vue
