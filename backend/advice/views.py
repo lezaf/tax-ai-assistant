@@ -31,9 +31,6 @@ def generate_advice(request):
     user_data_str = ", ".join(f"{k}= {user_data[k]}" for k in user_data)
     user_prompt = f"The user provided following data: {user_data_str}." \
                   f" User's message is : {data['userPrompt']}"
-    
-    print(f"User provided data: {user_data_str}")
-    print(f"User prompt: {user_prompt}")
 
     # API call to OpenAI
     try:
@@ -51,6 +48,7 @@ def generate_advice(request):
                     "content": user_prompt
                 }
             ],
+            temperature=0.3
         )
     except Exception as e:
         return Response({
