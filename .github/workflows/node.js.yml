@@ -29,6 +29,5 @@ jobs:
         cache: 'npm'
 
     - name: Run tests
-      run: |
-        cd frontend
-        npx vitest
+      working-directory: './frontend'
+      run: npx vitest --config vitest.config.js
