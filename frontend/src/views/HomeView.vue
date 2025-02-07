@@ -8,7 +8,7 @@ const answer = ref("");
 
 <template>
   <div class="main-container">
-    <TaxForm v-model="answer" />
+    <TaxForm v-model:answer="answer" />
     <AIAnswer v-model:answer="answer" />
   </div>
 </template>
