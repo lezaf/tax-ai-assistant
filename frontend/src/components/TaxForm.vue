@@ -3,8 +3,8 @@ import { ref } from "vue";
 import axios from "axios";
 import TaxFormFields from "./TaxFormFields.vue";
 
-const props = defineProps(["modelValue"]);
-const emit = defineEmits(["update:modelValue"]);
+const props = defineProps(["answer"]);
+const emit = defineEmits(["update:answer"]);
 
 // Reactive variables for form inputs
 const taxData = ref({
@@ -65,7 +65,7 @@ const getAdvice = async () => {
     console.log("Response:", response.data.answer);
 
     // Update answer to parent
-    emit("update:modelValue", response.data.answer);
+    emit("update:answer", response.data.answer);
   } catch (e) {
     console.error("Error submitting the form: ", e);
   }
