@@ -98,9 +98,9 @@ def  generate_advice(request):
     return  Response({
         'success': True,
         'detail': 'Form was submitted successfully!',
-        'answer': chat_completion.choices[0].message.content,
-        'status': status.HTTP_200_OK
-    })
+        'answer': chat_completion.choices[0].message.content
+    },
+    status=status.HTTP_200_OK)
 ```
 
 ## Containerization with Docker
@@ -115,3 +115,15 @@ docker-compose up
 ```
 
 Follow frontend's container url (by default http://localhost:5173) to operate application.
+
+## CI pipeline
+
+To ensure smooth **Continuous Integration** to the application, **GitHub Actions** workflows are used. In [.github/workflows](.github/workflows) there are workflows for backend and frontend parts. The workflows are defined for **push** and **pull request** to main.
+
+#### Backend: django.yml
+
+Handles backend build for specified versions, uses secrets stored in GitHub's _Actions Secrets and Variables_ to set necessary environment variables and install dependencies. Finally, runs specified tests with django testing environment.
+
+#### Frontend: nodejs
+
+Handles frontend build for specified versions, installs dependecies and runs specified tests with vitest environment.
