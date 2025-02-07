@@ -3,8 +3,8 @@ import { ref } from "vue";
 import axios from "axios";
 import TaxFormFields from "./TaxFormFields.vue";
 
-const props = defineProps(["answer"]);
-const emit = defineEmits(["update:answer"]);
+const props = defineProps(["answer", "isLoading"]);
+const emit = defineEmits(["update:answer", "update:isLoading"]);
 
 // Reactive variables for form inputs
 const taxData = ref({
@@ -44,6 +44,8 @@ const validateForm = () => {
 
 // Make the backend API call to get AI-generated advice
 const getAdvice = async () => {
+  emit("update:isLoading", true);
+
   try {
     const response = await axios.post(
       "http://localhost:8000/api/advice/generate",
@@ -68,6 +70,8 @@ const getAdvice = async () => {
     emit("update:answer", response.data.answer);
   } catch (e) {
     console.error("Error submitting the form: ", e);
+  } finally {
+    emit("update:isLoading", false);
   }
 };
 
@@ -87,7 +91,7 @@ const onSubmit = () => {
 
     <form @submit.prevent="onSubmit">
       <TaxFormFields v-model:taxData="taxData" v-model:errorMsg="errorMsg" />
-      <button type="submit">Submit</button>
+      <button type="submit">Generate</button>
     </form>
   </div>
 </template>
