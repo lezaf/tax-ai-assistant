@@ -42,6 +42,7 @@ describe("TaxForm Form Submission", () => {
       },
       {
         headers: { "Content-Type": "application/json" },
+        withCredentials: true,
       }
     );
   });
