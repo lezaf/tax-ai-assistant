@@ -6,7 +6,6 @@ import TaxFormFields from "./TaxFormFields.vue";
 const props = defineProps(["answer", "isLoading"]);
 const emit = defineEmits(["update:answer", "update:isLoading"]);
 
-// Reactive variables for form inputs
 const taxData = ref({
   income: null,
   expenses: null,
@@ -19,7 +18,7 @@ const errorMsg = ref({
   propertiesNum: "",
 });
 
-// Form validation function
+// Form validation
 const validateForm = () => {
   if (taxData.value.income < 0) {
     errorMsg.value.income = "Income cannot be negative!";
