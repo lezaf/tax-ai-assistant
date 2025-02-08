@@ -61,6 +61,9 @@ const getAdvice = async () => {
         headers: {
           "Content-Type": "application/json",
         },
+        // Make the requests with credentials to use session id
+        // to persist user data
+        withCredentials: true,
       }
     );
     console.log("Form submitted successfully!");
