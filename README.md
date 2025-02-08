@@ -57,34 +57,72 @@ To integrate AI in backend to generate content based on prompts, the [OpenAI Pyt
 
 # ...
 
-client  =  OpenAI(
-api_key=env('OPENAI_API_KEY')
+client  =  OpenAI(api_key=env('OPENAI_API_KEY'))
 
 @api_view(['POST'])
 def  generate_advice(request):
     # ...
 
+    # Get the model
+    chat, _ = ChatHistory.objects.get_or_create(user_id=user_id)
+    _create_or_update_history(chat,
+                              role="user",
+                              content=user_content)
+
+    # API call to OpenAI
     try:
-        chat_completion  =  client.chat.completions.create(
+        chat_completion = client.chat.completions.create(
             model='gpt-4o',
-            messages=[
-                {
-                    "role": "developer",
-                    "content": "You are a helpful tax filing assistant." +
-                        "You get tax related data and a user prompt"  +
-                        "and you provide advice."
-                },
-                {
-                    "role": "user",
-                    "content": user_prompt
-                }
-            ],
+            messages=chat.messages,
+            temperature=0.3
         )
 
-# ...
+    # ...
+
+    # Store new answer and save model
+    _create_or_update_history(chat,
+                              role="assistant",
+                              content=chat_completion.choices[0].message.content)
+    print(chat.messages)
+    chat.save()
+
+    # ...
 ```
 
-In this part, the OpenAI client is created and the expected behavior is defined. On success, the **AI generated answer** is included in _Response_:
+### AI model context
+
+To give context to the AI model for follow-up questions, [ChatHistory](./backend/advice/models.py) django model is defined. Currently, the app supports **session-based** users so ChatHistory has minimal implementation.
+
+Every new user prompt to the model along with model's response are added to the "history" and included to the next OpenAI call (see [utils.py](backend/advice/utils.py)):
+
+```
+def _create_or_update_history(chat, role, content):
+    # Define model behavior
+    if not chat.messages:
+        with open('./AIDeveloperSettings/setting1.txt', 'r') as f:
+            setting_content = f.read().replace('\n', ' ')
+
+        chat.messages.append(
+            {
+                "role": "developer",
+                "content": setting_content
+            }
+        )
+
+    # Add new message
+    chat.messages.append(
+        {
+            "role": role,
+            "content": content
+        }
+    )
+```
+
+The model specification in **"developer"** role is defined in [AIDeveloperSettings](backend/AIDeveloperSettings/).
+
+### Response
+
+On success, the **AI generated answer** is included in _Response_:
 
 ```
 # in backend/advice/views.py
