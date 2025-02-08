@@ -7,9 +7,10 @@ import { RouterView } from "vue-router";
     <div class="wrapper">
       <h1>Tax AI Assistant</h1>
       <p>
-        Welcome to the Tax Filing AI Assistant! In this web app you can provide
-        some basic financial information along with a prompt. Submit your data
-        and you will get an AI-generated response!
+        Welcome to the Tax Filing AI Assistant, a tool that provides tax filing
+        advice! Input the financial data required in the fields along with a tax
+        related question and benefit from the insights of our AI-powered
+        assistant. Start a conversation!
       </p>
     </div>
   </header>
