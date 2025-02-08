@@ -83,7 +83,6 @@ def  generate_advice(request):
     _create_or_update_history(chat,
                               role="assistant",
                               content=chat_completion.choices[0].message.content)
-    print(chat.messages)
     chat.save()
 
     # ...

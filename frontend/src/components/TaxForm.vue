@@ -66,8 +66,6 @@ const getAdvice = async () => {
         withCredentials: true,
       }
     );
-    console.log("Form submitted successfully!");
-    console.log("Response:", response.data.answer);
 
     // Update answer to parent
     emit("update:answer", response.data.answer);
