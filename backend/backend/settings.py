@@ -52,9 +52,17 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:5173',
 ]
+
+# Setup session configurations 
+SESSION_ENGINE = "django.contrib.sessions.backends.db"  # Stores session in DB
+SESSION_COOKIE_NAME = "sessionid"  # Default session cookie name
+SESSION_COOKIE_SECURE = False  # Set to True if using HTTPS
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_AGE = 60 * 60 * 24  # 1 day session expiry
 
 ROOT_URLCONF = 'backend.urls'
 
