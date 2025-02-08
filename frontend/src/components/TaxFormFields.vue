@@ -5,7 +5,7 @@ const errorMsg = defineModel("errorMsg");
 
 <template>
   <div class="form-field">
-    <label for="income">Annual income (EUR):</label>
+    <label for="income">Annual income:</label>
     <input
       type="number"
       id="income"
@@ -17,7 +17,7 @@ const errorMsg = defineModel("errorMsg");
   </div>
 
   <div class="form-field">
-    <label for="expenses">Annual expenses (EUR):</label>
+    <label for="expenses">Annual expenses:</label>
     <input
       type="number"
       id="expenses"
@@ -89,16 +89,4 @@ textarea {
 .error-msg {
   font-style: italic;
 }
-
-/* Remove arrows in browsers. */
-/* input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-input[type="number"] {
-  -appearance: none;
-  -moz-appearance: textfield;
-} */
 </style>
