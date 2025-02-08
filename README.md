@@ -83,6 +83,7 @@ def  generate_advice(request):
     _create_or_update_history(chat,
                               role="assistant",
                               content=chat_completion.choices[0].message.content)
+    print(chat.messages)
     chat.save()
 
     # ...
@@ -142,10 +143,10 @@ def  generate_advice(request):
 
 ## Containerization with Docker
 
-To build and operate app in Docker container:
+> :exclamation: **IMPORTANT:**
+> Create .env file in backend with necessary secret variables (see [Local .env file](#local-env-file))
 
-- Prepare .env in backend (see [Local .env file](#local-env-file))
-- **Build** and **start** the containers using [docker-compose.yml](./docker-compose.yml):
+**Build** and **start** the containers using [docker-compose.yml](./docker-compose.yml):
 
 ```
 docker-compose up
